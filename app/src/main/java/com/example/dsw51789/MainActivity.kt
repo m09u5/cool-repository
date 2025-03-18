@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.dsw51789.ui.theme.Dsw51789Theme
+import com.example.dsw51789.view.HomePage
 import com.example.dsw51789.view.LoginPage
 import com.example.dsw51789.view.RegisterPage
 
@@ -31,6 +32,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("Routes.registerPage"){
                         RegisterPage(navController)
+                    }
+                    composable("Routes.homePage") {
+                        HomePage(navController)
                     }
                 })
         }

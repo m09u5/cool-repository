@@ -5,6 +5,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Mail
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,29 +46,63 @@ fun RegisterPage(navController: NavController){
         OutlinedTextField(
             value = username.value,
             onValueChange = { username.value = it },
-            label = { Text("Full Name")}
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text("Full Name")},
+            leadingIcon = {
+                IconButton(onClick = {/*todo*/}) {
+                    Icon(imageVector = Icons.Outlined.Person, contentDescription = "")
+                }
+            }
 
         )
         OutlinedTextField(
             value = email.value,
             onValueChange = { email.value = it },
             label = { Text("Email")},
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = {
+                IconButton(onClick = {/*todo*/}) {
+                    Icon(imageVector = Icons.Outlined.Mail, contentDescription = "")
+                }
+            }
 
             )
         OutlinedTextField(
             value = password.value,
             onValueChange = { password.value = it },
             label = { Text("Password")},
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = {
+                IconButton(onClick = {/*todo*/}) {
+                    Icon(imageVector = Icons.Outlined.Lock, contentDescription = "")
+                }
+            },
+                    trailingIcon = {
+                IconButton(onClick = {/*todo*/}) {
+                    Icon(imageVector = Icons.Outlined.Visibility, contentDescription = "")
+                }
+            }
 
             )
         OutlinedTextField(
             value = password.value,
             onValueChange = { password.value = it },
-            label = { Text("Repassword")},
+            label = { Text("Confirm Password")},
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = {
+                IconButton(onClick = {/*todo*/}) {
+                    Icon(imageVector = Icons.Outlined.Lock, contentDescription = "")
+                }
+            },
+            trailingIcon = {
+                IconButton(onClick = {/*todo*/}) {
+                    Icon(imageVector = Icons.Outlined.Visibility, contentDescription = "")
+                }
+            }
 
             )
         Text(
-            text = "already have account? sign in",
+            text = "Already have account? Sign in",
             textAlign = TextAlign.Right,
             fontSize =  20.sp ,
             modifier = Modifier
