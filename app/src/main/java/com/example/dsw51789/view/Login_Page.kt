@@ -71,7 +71,6 @@ fun LoginPage(navController: NavController){
             color = Color(0xFF471AA0),
             textAlign = TextAlign.Left,
             fontSize = 36.sp,
-            fontStyle = FontStyle.Italic,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.fillMaxWidth()
 
