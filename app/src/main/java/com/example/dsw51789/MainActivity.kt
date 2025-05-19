@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -24,38 +25,20 @@ import com.example.dsw51789.ui.theme.TodoAppTheme
 import com.example.dsw51789.view.HomePage
 import com.example.dsw51789.view.LoginPage
 import com.example.dsw51789.view.RegisterPage
+import com.example.dsw51789.viewmodel.AuthViewModel
 import com.example.dsw51789.viewmodel.TodoViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val todoViewModel = ViewModelProvider(this)[TodoViewModel::class.java]
+        val authViewModel: AuthViewModel by viewModels()
         setContent {
-            TodoAppTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) { TodoListPage(todoViewModel) }
+            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                MyAppNavigation(
+                    modifier = Modifier.padding(innerPadding),
+                    authViewModel = authViewModel)
             }
         }
-        """setContent {
-            val todoViewModel = ViewModelProvider(owner = this)[TodoViewModel::class.java]
-                val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = "Routes.loginPage", builder = {
-                    composable("Routes.loginPage"){
-                        LoginPage(navController)
-                    }
-                    composable("Routes.registerPage"){
-                        RegisterPage(navController)
-                    }
-                    composable("Routes.homePage") {
-                        HomePage(navController)
-                    }
-                    composable("Routes.todoListPage") {
-                        TodoViewModel(navController)
-                    }
-                })
-        }"""
     }
 }

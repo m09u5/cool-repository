@@ -31,11 +31,12 @@ import androidx.compose.ui.unit.sp
 import com.example.dsw51789.viewmodel.TodoViewModel
 import com.example.dsw51789.R
 import com.example.dsw51789.model.Todo
+import com.example.dsw51789.viewmodel.AuthViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 @Composable
-fun TodoListPage(viewModel: TodoViewModel){
+fun TodoListPage(viewModel: TodoViewModel, authViewModel: AuthViewModel){
 
     val todoList by viewModel.todoList.observeAsState()
     var inputText by remember {
@@ -117,12 +118,12 @@ fun TodoItem(item : Todo, onDelete : ()-> Unit) {
                 color = Color.White
             )
         }
-        IconButton(onClick = onDelete) {
-            Icon(
-                painter = painterResource(id = R.drawable.baseline_delete_24),
-                contentDescription = "Delete",
-                tint = Color.White
-            )
-        }
+//        IconButton(onClick = onDelete) {
+//            Icon(
+//                painter = painterResource(id = R.drawable.baseline_delete_24),
+//                contentDescription = "Delete",
+//                tint = Color.White
+//            )
+//        }
     }
 }
