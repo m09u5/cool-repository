@@ -45,7 +45,7 @@ fun RegisterPage(navController: NavController, authViewModel: AuthViewModel){
 
     LaunchedEffect(authState.value) {
         when(authState.value){
-            is AuthState.Authenticated -> navController.navigate(Routes.homePage)
+            is AuthState.Authenticated -> navController.navigate(Routes.todoListPage)
             is AuthState.Error -> Toast.makeText(context, (authState.value as AuthState.Error).message,
                 Toast.LENGTH_LONG).show()
             else -> Unit
@@ -132,7 +132,7 @@ fun RegisterPage(navController: NavController, authViewModel: AuthViewModel){
             fontSize =  20.sp ,
             modifier = Modifier
                 .clickable {
-                    navController.navigate("Routes.loginPage")
+                    navController.navigate(Routes.loginPage)
                 }
         )
     }
