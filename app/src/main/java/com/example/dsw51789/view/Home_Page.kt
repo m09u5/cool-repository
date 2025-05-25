@@ -36,7 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.dsw51789.viewmodel.TodoViewModel
+import com.example.dsw51789.viewmodel.ContactViewModel
 import com.example.dsw51789.R
 import com.example.dsw51789.model.Todo
 import com.example.dsw51789.utils.Routes
@@ -50,7 +50,7 @@ import androidx.compose.ui.window.DialogProperties
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TodoListPage(viewModel: TodoViewModel, authViewModel: AuthViewModel, navController: NavController) {
+fun TodoListPage(viewModel: ContactViewModel, authViewModel: AuthViewModel, navController: NavController) {
     val contactList by viewModel.todoList.observeAsState()
     var showDialog by remember { mutableStateOf(false) }
     var name by remember { mutableStateOf("") }
@@ -84,7 +84,6 @@ fun TodoListPage(viewModel: TodoViewModel, authViewModel: AuthViewModel, navCont
             fontSize = 16.sp
         )
 
-        // Dolny pasek z przyciskami
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -97,20 +96,21 @@ fun TodoListPage(viewModel: TodoViewModel, authViewModel: AuthViewModel, navCont
                 navController.navigate(Routes.loginPage) {
                     popUpTo(0) { inclusive = true }
                 }
-            }) {
+
+            }
+            ) {
                 Text("Wyloguj")
             }
 
-            IconButton(onClick = { showDialog = true }) {
+            Button(onClick = { showDialog = true }) {
                 Icon(
                     imageVector = Icons.Filled.Add,
-                    contentDescription = "Dodaj kontakt"
+                    contentDescription = ""
                 )
             }
         }
     }
 
-    // AlertDialog (popup)
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { showDialog = false },
@@ -201,7 +201,7 @@ fun TodoItem(item: Todo, onDelete: () -> Unit) {
                 val phone = item.title.split(" - ").getOrNull(1)?.filter { it.isDigit() }
                 phone?.let {
                     val intent = Intent(Intent.ACTION_DIAL).apply {
-                        data = Uri.parse("tel:$it")
+                        data = Uri.parse("tel:+48$it")
                     }
                     context.startActivity(intent)
                 }

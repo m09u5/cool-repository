@@ -2,8 +2,10 @@ package com.example.dsw51789.view
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +16,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Person
@@ -68,10 +72,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
-    val username = remember { mutableStateOf("") }
+    val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val authState = authViewModel.authState.observeAsState()
     val context = LocalContext.current
@@ -91,7 +96,7 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
             .fillMaxSize()
             .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.Center,
     ){
         Spacer(modifier = Modifier.height(62.dp))
         Image(
@@ -111,62 +116,110 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
 
         )
         Spacer(modifier = Modifier.height(46.dp))
-        OutlinedTextField(
-            value = username.value,
-            onValueChange = { username.value = it },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(15.dp),
-            label = { Text("Email or User Name")},
-            leadingIcon = {
-                IconButton(onClick = {/*todo*/}) {
-                    Icon(imageVector = Icons.Outlined.Person, contentDescription = "")
-                }
-            },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Blue,
-                unfocusedBorderColor = Color.Blue,
-            ),textStyle = TextStyle(
-                color = Color.Gray,
-                fontSize = 16.sp,
-                shadow = Shadow(
-                    color = Color.Black.copy(alpha = 0.3f),
-                    offset = Offset(2f, 2f),
-                    blurRadius = 4f
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(60.dp)
+                .border(
+                    width = 2.dp,
+                    color = Color(0xFF9747FF),
+                    shape = RoundedCornerShape(15.dp)
                 )
-            )
-        )
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Spacer(modifier = Modifier.width(4.dp))
+                Icon(
+                    painter = painterResource(id = R.drawable.login),
+                    contentDescription = null,
+                    tint = Color(0xFF471AA0),
+                    modifier = Modifier.size(23.dp)
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                BasicTextField(
+                    value = email.value,
+                    onValueChange = { email.value = it },
+                    modifier = Modifier.weight(1f),
+                    singleLine = true,
+                    textStyle = TextStyle(
+                        color = Color.Gray,
+                        fontSize = 16.sp,
+                    ),
+                    decorationBox = { innerTextField ->
+                        if (email.value.isEmpty()) {
+                            Text(
+                                text = "Email or User Name",
+                                color = Color.Gray,
+                                fontSize = 16.sp
+                            )
+                        }
+                        innerTextField()
+                    }
+                )
+            }
+        }
+
         Spacer(modifier = Modifier.height(40.dp))
         var passwordVisible by remember { mutableStateOf(false) }
 
-        OutlinedTextField(
-            value = password.value,
-            onValueChange = { password.value = it },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(15.dp),
-            label = { Text("Password") },
-            leadingIcon = {
-                IconButton(onClick = { /* opcjonalnie */ }) {
-                    Icon(imageVector = Icons.Outlined.Lock, contentDescription = "")
-                }
-            },
-            trailingIcon = {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(60.dp)
+                .border(
+                    width = 2.dp,
+                    color = Color(0xFF9747FF),
+                    shape = RoundedCornerShape(15.dp)
+                )
+                .padding(horizontal = 12.dp, vertical = 8.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.password),
+                    contentDescription = null,
+                    tint = Color(0xFF471AA0),
+                    modifier = Modifier.size(30.dp)
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                BasicTextField(
+                    value = password.value,
+                    onValueChange = { password.value = it },
+                    modifier = Modifier.weight(1f),
+                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    singleLine = true,
+                    textStyle = TextStyle(color = Color.Black, fontSize = 16.sp),
+                    decorationBox = { innerTextField ->
+                        if (password.value.isEmpty()) {
+                            Text("Password", color = Color.Gray, fontSize = 16.sp)
+                        }
+                        innerTextField()
+                    }
+                )
+
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(
                         imageVector = if (passwordVisible) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility,
-                        contentDescription = if (passwordVisible) "Hide password" else "Show password"
+                        contentDescription = null
                     )
                 }
-            },
-            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Blue,
-                unfocusedBorderColor = Color.Blue
-            )
-        )
+            }
+        }
+
         Spacer(modifier = Modifier.height(40.dp))
         Text(
             text = "Forget password?",
             color = Color.Blue ,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Right,
             modifier = Modifier
                 .fillMaxWidth()
@@ -177,14 +230,17 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
         Spacer(modifier = Modifier.height(40.dp))
         Button(
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFBB84E8)),
-            onClick = { authViewModel.login(username.value, password.value) },
+            onClick = { authViewModel.login(email.value, password.value) },
             enabled = authState.value != AuthState.Loading,
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier.fillMaxWidth()
+                .height(50.dp)
 
         ) {
-            Text(text = "Sign in")
-
+            Text(
+                text = "Sign in",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,)
         }
         Spacer(modifier = Modifier.height(200.dp))
         Text(color = Color(0xFF471AA0),
@@ -196,7 +252,7 @@ fun LoginPage(navController: NavController, authViewModel: AuthViewModel){
                 }
             },
             textAlign = TextAlign.Right,
-            fontSize =  20.sp ,
+            fontSize =  18.sp ,
             modifier = Modifier
                 .clickable {
                     navController.navigate(Routes.registerPage)
